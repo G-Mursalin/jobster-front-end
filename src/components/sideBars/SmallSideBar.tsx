@@ -6,11 +6,15 @@ import { FaTimes } from "react-icons/fa";
 import Logo from "../Logo";
 import NavLinks from "../NavLinks";
 // Redux Toolkit
-import { selectCurrentSidebarStates } from "../../redux/features/sidebar/sidebarSlice";
-import { useAppSelector } from "../../redux/hooks";
+import {
+  selectCurrentSidebarStates,
+  setToggleSidebar,
+} from "../../redux/features/sidebar/sidebarSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 const SmallSideBar = () => {
   const { isSidebarOpen } = useAppSelector(selectCurrentSidebarStates);
+  const dispatch = useAppDispatch();
 
   return (
     <Wrapper>
@@ -20,7 +24,10 @@ const SmallSideBar = () => {
         }
       >
         <div className="content">
-          <button className="close-btn">
+          <button
+            className="close-btn"
+            onClick={() => dispatch(setToggleSidebar())}
+          >
             <FaTimes />
           </button>
           <header>
