@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // React
 import { ChangeEvent, FormEvent, useState } from "react";
 // CSS
@@ -125,7 +126,7 @@ const Register = () => {
         {values.isMember ? (
           <>
             <p>Login Email: test@gmail.com</p>
-            <p>Login Password: 123456789</p>
+            <p>Login Password: 123456</p>
           </>
         ) : (
           " "
