@@ -7,9 +7,17 @@ type TFromRow = {
   value: string;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   labelText?: string;
+  placeholder?: string;
 };
 
-const FormRow = ({ type, name, value, handleChange, labelText }: TFromRow) => {
+const FormRow = ({
+  type,
+  name,
+  value,
+  handleChange,
+  labelText,
+  placeholder,
+}: TFromRow) => {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
@@ -22,6 +30,7 @@ const FormRow = ({ type, name, value, handleChange, labelText }: TFromRow) => {
         name={name}
         onChange={handleChange}
         className="form-input"
+        placeholder={placeholder}
       />
     </div>
   );
