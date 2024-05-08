@@ -6,6 +6,7 @@ import AddJob from "../pages/AddJob";
 import Landing from "../pages/Landing";
 import ProtectedRoute from "./ProtectedRoute";
 import Profile from "../pages/Profile";
+import Stats from "../pages/Stats";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
+      {
+        element: <Stats />,
+        index: true,
+      },
       {
         path: "all-jobs",
         element: <AllJobs />,

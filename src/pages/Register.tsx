@@ -83,7 +83,7 @@ const Register = () => {
 
       // Redirect to Dashboard
       navigate("/");
-      toast.success(`Welcome ${user.name}`);
+      toast.success(`Welcome`);
 
       setValues(initialState);
     } catch (error: any) {

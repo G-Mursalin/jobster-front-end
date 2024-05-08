@@ -31,7 +31,7 @@ const jobApi = baseApi.injectEndpoints({
         method: "POST",
         body: jobInfo,
       }),
-      invalidatesTags: ["job"],
+      invalidatesTags: ["job", "meta"],
     }),
     // Delete A Job
     deleteJob: builder.mutation({
@@ -39,7 +39,7 @@ const jobApi = baseApi.injectEndpoints({
         url: `/job/${jobId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["job"],
+      invalidatesTags: ["job", "meta"],
     }),
     // Edit A Job
     editJob: builder.mutation({
