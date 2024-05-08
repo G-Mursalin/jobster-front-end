@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // React
 import { ChangeEvent, useEffect, useState } from "react";
 // CSS
@@ -27,7 +26,9 @@ const SearchContainer = () => {
   const queryParams = new URLSearchParams(location.search);
 
   // Handle Form and Fetch data
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const name = e.target.name;
     const value = e.target.value;
 
@@ -41,6 +42,7 @@ const SearchContainer = () => {
       searchParams.delete(name);
     } else {
       searchParams.set(name, value);
+      searchParams.delete("page");
     }
 
     setSearchParams(searchParams);
@@ -62,7 +64,6 @@ const SearchContainer = () => {
     searchParams.delete("status");
     searchParams.delete("jobType");
     searchParams.delete("sort");
-    searchParams.delete("page");
 
     setSearchParams(searchParams);
     setFormValues(() => ({ ...initialState }));
@@ -80,11 +81,11 @@ const SearchContainer = () => {
             labelText="Search Term"
             value={formValues.searchTerm}
             handleChange={handleChange}
-            placeholder="Position name, Company name or Location"
+            placeholder="Position name"
           />
           {/* search by status */}
           <FormRowSelect
-            labelText="job status"
+            labelText="Job Status"
             name="status"
             value={formValues.status}
             handleChange={handleChange}
@@ -92,7 +93,7 @@ const SearchContainer = () => {
           />
           {/* search by type */}
           <FormRowSelect
-            labelText="job type"
+            labelText="Job Type"
             name="jobType"
             value={formValues.jobType}
             handleChange={handleChange}
@@ -100,7 +101,6 @@ const SearchContainer = () => {
           />
           {/* sort */}
           <FormRowSelect
-            labelText="sort"
             name="sort"
             value={formValues.sort}
             handleChange={handleChange}

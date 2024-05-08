@@ -1,4 +1,20 @@
-const FormRowSelect = ({ labelText, name, value, handleChange, list }) => {
+import { ChangeEvent } from "react";
+
+type TFormRowSelect = {
+  labelText?: string;
+  name: string;
+  value: string;
+  handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  list: string[];
+};
+
+const FormRowSelect = ({
+  labelText,
+  name,
+  value,
+  handleChange,
+  list,
+}: TFormRowSelect) => {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">

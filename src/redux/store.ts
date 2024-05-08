@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import sidebarReducer from "./features/sidebar/sidebarSlice";
+import jobReducer from "./features/job/jobSlice";
 import { baseApi } from "./api/baseApi";
 import authReducer from "./features/auth/authSlice";
 import {
@@ -25,6 +26,7 @@ export const store = configureStore({
   reducer: {
     sidebar: sidebarReducer,
     auth: persistedAuthReducer,
+    job: jobReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
