@@ -9,7 +9,10 @@ import Logo from "./Logo";
 // Redux Toolkit
 import { setToggleSidebar } from "../redux/features/sidebar/sidebarSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectCurrentAuthStates } from "../redux/features/auth/authSlice";
+import {
+  logOut,
+  selectCurrentAuthStates,
+} from "../redux/features/auth/authSlice";
 
 const NavBar = () => {
   const [showLogout, setShowLogout] = useState(false);
@@ -41,7 +44,11 @@ const NavBar = () => {
             <FaCaretDown />
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
-            <button type="button" className="dropdown-btn">
+            <button
+              onClick={() => dispatch(logOut())}
+              type="button"
+              className="dropdown-btn"
+            >
               logout
             </button>
           </div>

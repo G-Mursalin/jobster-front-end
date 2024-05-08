@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // React Icons
 import { FaBriefcase, FaCalendarAlt, FaLocationArrow } from "react-icons/fa";
 // React Router
@@ -8,9 +9,40 @@ import Wrapper from "../assets/wrappers/Job";
 import JobInfo from "./JobInfo";
 // Types
 import { IJob } from "../types/job.types";
+import { useDeleteJobMutation } from "../redux/features/job/jobApi";
+import { toast } from "react-toastify";
+import { useAppDispatch } from "../redux/hooks";
+import { setEditJob } from "../redux/features/job/jobSlice";
 
 const Job = (props: IJob) => {
-  const { position, company, jobLocation, status, jobType, createAt } = props;
+  const { _id, position, company, jobLocation, status, jobType, createAt } =
+    props;
+  const [deleteJob, { isLoading }] = useDeleteJobMutation();
+  const dispatch = useAppDispatch();
+
+  // Handle Delete Functionality
+  const handleDeleteJob = async (id: string) => {
+    try {
+      await deleteJob(id);
+      toast.success("Job Deleted Successfully");
+    } catch (error: any) {
+      toast.error(error.data.message);
+    }
+  };
+
+  // Handle Edit Redux State
+  const handleEditJobState = () => {
+    dispatch(
+      setEditJob({
+        editJobId: _id,
+        position,
+        company,
+        jobLocation,
+        status,
+        jobType,
+      })
+    );
+  };
 
   return (
     <Wrapper>
@@ -37,11 +69,20 @@ const Job = (props: IJob) => {
         </div>
         <footer>
           <div className="actions">
-            <Link to="/add-job" className="btn edit-btn">
+            <Link
+              onClick={handleEditJobState}
+              to="/add-job"
+              className="btn edit-btn"
+            >
               Edit
             </Link>
-            <button type="button" className="btn delete-btn">
-              Delete
+            <button
+              onClick={() => handleDeleteJob(_id)}
+              type="button"
+              className="btn delete-btn"
+              disabled={isLoading}
+            >
+              {isLoading ? "Deleting..." : "Delete"}
             </button>
           </div>
         </footer>

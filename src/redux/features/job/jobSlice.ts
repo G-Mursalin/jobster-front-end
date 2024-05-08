@@ -10,6 +10,8 @@ type TJobState = {
   jobLocation: string;
   status: string;
   jobType: string;
+  isEditing: boolean;
+  editJobId: string;
 };
 
 // Initial state
@@ -19,6 +21,8 @@ const initialState: TJobState = {
   jobLocation: "",
   status: Status[0],
   jobType: JobType[0],
+  isEditing: false,
+  editJobId: "",
 };
 
 export const jobSlice = createSlice({
@@ -38,10 +42,17 @@ export const jobSlice = createSlice({
         ...initialState,
       };
     },
+
+    setEditJob: (
+      state,
+      action: PayloadAction<Omit<TJobState, "isEditing">>
+    ) => {
+      return { ...state, isEditing: true, ...action.payload };
+    },
   },
 });
 
-export const { handleChange, clearValues } = jobSlice.actions;
+export const { handleChange, clearValues, setEditJob } = jobSlice.actions;
 
 export default jobSlice.reducer;
 

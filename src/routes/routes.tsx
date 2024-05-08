@@ -3,11 +3,17 @@ import App from "../App";
 import Register from "../pages/Register";
 import AllJobs from "../pages/AllJobs";
 import AddJob from "../pages/AddJob";
+import Landing from "../pages/Landing";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "all-jobs",
@@ -22,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/landing",
+    element: <Landing />,
   },
 ]);
 

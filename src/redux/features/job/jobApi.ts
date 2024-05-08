@@ -33,7 +33,33 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["job"],
     }),
+    // Delete A Job
+    deleteJob: builder.mutation({
+      query: (jobId) => ({
+        url: `/job/${jobId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["job"],
+    }),
+    // Edit A Job
+    editJob: builder.mutation({
+      query: (jobData) => {
+        const { editJobId, ...data } = jobData;
+
+        return {
+          url: `/job/${editJobId}`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["job"],
+    }),
   }),
 });
 
-export const { useGetAllJobsQuery, useCreateJobMutation } = jobApi;
+export const {
+  useGetAllJobsQuery,
+  useCreateJobMutation,
+  useDeleteJobMutation,
+  useEditJobMutation,
+} = jobApi;

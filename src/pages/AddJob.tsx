@@ -15,14 +15,26 @@ import {
   handleChange,
   selectCurrentJobStates,
 } from "../redux/features/job/jobSlice";
-import { useCreateJobMutation } from "../redux/features/job/jobApi";
+import {
+  useCreateJobMutation,
+  useEditJobMutation,
+} from "../redux/features/job/jobApi";
+import { useNavigate } from "react-router-dom";
 
 const AddJob = () => {
-  const { position, company, jobLocation, status, jobType } = useAppSelector(
-    selectCurrentJobStates
-  );
+  const {
+    isEditing,
+    editJobId,
+    position,
+    company,
+    jobLocation,
+    status,
+    jobType,
+  } = useAppSelector(selectCurrentJobStates);
   const dispatch = useAppDispatch();
   const [createJob, { isLoading }] = useCreateJobMutation();
+  const [editJob] = useEditJobMutation();
+  const navigate = useNavigate();
 
   // Send to backend
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -34,18 +46,32 @@ const AddJob = () => {
     }
 
     try {
-      await createJob({
-        position,
-        company,
-        jobLocation,
-        status,
-        jobType,
-      }).unwrap();
+      if (isEditing) {
+        await editJob({
+          editJobId,
+          position,
+          company,
+          jobLocation,
+          status,
+          jobType,
+        });
 
-      toast.success("Job Added Successfully");
+        toast.success("Job Updated Successfully");
+      } else {
+        await createJob({
+          position,
+          company,
+          jobLocation,
+          status,
+          jobType,
+        }).unwrap();
 
-      // Reset Form State
+        toast.success("Job Added Successfully");
+      }
+
+      // Reset Form State an redirect
       dispatch(clearValues());
+      navigate("/all-jobs");
     } catch (error: any) {
       toast.error(error.data.message);
     }
@@ -65,7 +91,7 @@ const AddJob = () => {
   return (
     <Wrapper>
       <form onSubmit={handleSubmit} className="form">
-        <h3>{"add job"}</h3>
+        <h3>{isEditing ? "edit job" : "add job"}</h3>
 
         <div className="form-center">
           {/* Position */}
@@ -118,9 +144,23 @@ const AddJob = () => {
             >
               clear
             </button>
-            <button type="submit" className="btn btn-block submit-btn">
-              {isLoading ? "Sending..." : "submit"}
-            </button>
+            {isEditing ? (
+              <button
+                disabled={isLoading}
+                type="submit"
+                className="btn btn-block submit-btn"
+              >
+                {isLoading ? "updating..." : "update"}
+              </button>
+            ) : (
+              <button
+                disabled={isLoading}
+                type="submit"
+                className="btn btn-block submit-btn"
+              >
+                {isLoading ? "Sending..." : "submit"}
+              </button>
+            )}
           </div>
         </div>
       </form>
