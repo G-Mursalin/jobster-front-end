@@ -2,7 +2,7 @@
 // React
 import { ChangeEvent, FormEvent } from "react";
 // CSS
-import Wrapper from "./../assets/wrappers/AddJobForm";
+import Wrapper from "../assets/wrappers/DashboardForm";
 // React Tostify
 import { toast } from "react-toastify";
 // Components

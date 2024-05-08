@@ -5,6 +5,7 @@ import AllJobs from "../pages/AllJobs";
 import AddJob from "../pages/AddJob";
 import Landing from "../pages/Landing";
 import ProtectedRoute from "./ProtectedRoute";
+import Profile from "../pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "add-job",
         element: <AddJob />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },

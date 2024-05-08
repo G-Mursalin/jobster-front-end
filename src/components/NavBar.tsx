@@ -7,17 +7,15 @@ import { FaAlignLeft, FaCaretDown, FaUserCircle } from "react-icons/fa";
 // Components
 import Logo from "./Logo";
 // Redux Toolkit
+import { logOut } from "../redux/features/auth/authSlice";
 import { setToggleSidebar } from "../redux/features/sidebar/sidebarSlice";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import {
-  logOut,
-  selectCurrentAuthStates,
-} from "../redux/features/auth/authSlice";
+import { useGetMeQuery } from "../redux/features/user/userApi";
+import { useAppDispatch } from "../redux/hooks";
 
 const NavBar = () => {
   const [showLogout, setShowLogout] = useState(false);
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(selectCurrentAuthStates);
+  const { data, isLoading } = useGetMeQuery(undefined);
 
   return (
     <Wrapper>
@@ -40,7 +38,7 @@ const NavBar = () => {
             onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle />
-            {user?.name}
+            {isLoading ? "Loading..." : data.data.name}
             <FaCaretDown />
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>

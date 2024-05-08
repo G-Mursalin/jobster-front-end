@@ -26,7 +26,7 @@ function ProtectedRoute({ children }: TProtectedRoute) {
 
   const userInfo = verifyToken(token) as TUser;
 
-  if (userInfo.email != user?.email || userInfo.name != user.name) {
+  if (userInfo.email != user?.email || userInfo.id != user.id) {
     dispatch(logOut());
     return <Navigate to="/landing" replace={true} />;
   }
